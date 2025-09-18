@@ -15,6 +15,7 @@ import {
   Database,
   Cloud,
 } from 'lucide-react';
+import ProfessionalLayout from './ProfessionalLayout';
 
 interface CoursesProps {
   language: 'en' | 'bn';
@@ -298,22 +299,10 @@ const Courses = ({ language }: CoursesProps) => {
 
   return (
     <Element name="courses">
-      <motion.section
-        initial={{ opacity: 0, y: 20 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true, margin: '-100px' }}
-        className="section-card"
-        aria-labelledby="courses-heading"
+      <ProfessionalLayout
+        title={language === 'en' ? 'Professional Development' : 'পেশাদার উন্নয়ন'}
+        icon={<BookOpen className="text-emerald-500" size={24} />}
       >
-        <h2
-          id="courses-heading"
-          className="premium-title flex items-center gap-3"
-        >
-          <div className="icon-wrapper bg-emerald-100">
-            <BookOpen className="text-emerald-500" size={24} />
-          </div>
-          {language === 'en' ? 'Professional Development' : 'পেশাদার উন্নয়ন'}
-        </h2>
 
         <div className="mb-12">
           <h3 className="text-xl font-semibold mb-6 text-gray-800 flex items-center gap-2">
@@ -334,7 +323,7 @@ const Courses = ({ language }: CoursesProps) => {
             {professionalCourses.map(renderCourseItem)}
           </div>
         </div>
-      </motion.section>
+      </ProfessionalLayout>
     </Element>
   );
 };

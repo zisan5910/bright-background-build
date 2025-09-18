@@ -2,6 +2,7 @@
 import { motion } from 'framer-motion';
 import { Element } from 'react-scroll';
 import { Heart, ExternalLink } from 'lucide-react';
+import ProfessionalLayout from './ProfessionalLayout';
 
 interface InformationProps {
   language: 'en' | 'bn';
@@ -70,22 +71,10 @@ const Information = ({ language, age }: InformationProps) => {
 
   return (
     <Element name="family">
-      <motion.section
-        initial={{ opacity: 0, y: 20 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true, margin: '-100px' }}
-        className="section-card"
-        aria-labelledby="family-heading"
+      <ProfessionalLayout
+        title={language === 'en' ? 'Family & Personal Information' : 'পারিবারিক ও ব্যক্তিগত তথ্য'}
+        icon={<Heart className="text-red-500" size={24} />}
       >
-        <h2
-          id="family-heading"
-          className="premium-title flex items-center gap-3"
-        >
-          <div className="icon-wrapper bg-red-100">
-            <Heart className="text-red-500" size={24} aria-hidden="true" />
-          </div>
-          {language === 'en' ? 'Family' : 'পরিবার'}
-        </h2>
 
         <div className="space-y-8">
           {/* Family Information */}
@@ -156,7 +145,7 @@ const Information = ({ language, age }: InformationProps) => {
             </ul>
           </motion.div>
         </div>
-      </motion.section>
+      </ProfessionalLayout>
     </Element>
   );
 };

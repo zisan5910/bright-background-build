@@ -1,6 +1,7 @@
 import { motion } from 'framer-motion';
 import { Element } from 'react-scroll';
 import { GraduationCap, School, ExternalLink, BookOpen } from 'lucide-react';
+import ProfessionalLayout from './ProfessionalLayout';
 
 interface EducationProps {
   language: 'en' | 'bn';
@@ -62,23 +63,10 @@ const Education = ({ language }: EducationProps) => {
 
   return (
     <Element name="education">
-      <motion.section
-        initial={{ opacity: 0 }}
-        whileInView={{ opacity: 1 }}
-        viewport={{ once: true }}
-        transition={{ duration: 0.5 }}
-        className="section-card"
-        aria-labelledby="education-heading"
+      <ProfessionalLayout
+        title={language === 'en' ? 'Education' : 'শিক্ষা'}
+        icon={<BookOpen className="text-emerald-600" size={24} />}
       >
-        <h2
-          id="education-heading"
-          className="premium-title flex items-center gap-3"
-        >
-          <div className="icon-wrapper bg-emerald-100">
-            <BookOpen className="text-emerald-600" size={24} />
-          </div>
-          {language === 'en' ? 'Education' : 'শিক্ষা'}
-        </h2>
 
         <div className="space-y-6">
           {educationHistory.map((education) => (
@@ -131,7 +119,7 @@ const Education = ({ language }: EducationProps) => {
             </motion.div>
           ))}
         </div>
-      </motion.section>
+      </ProfessionalLayout>
     </Element>
   );
 };

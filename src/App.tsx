@@ -173,8 +173,12 @@ function App() {
       {/* Render Current Page */}
       {renderCurrentPage()}
 
-      {/* Floating Menu */}
-      <FloatingMenu />
+      {/* Professional Floating Menu */}
+      <FloatingMenu 
+        activeSection={activeSection}
+        scrollToSection={scrollToSection}
+        language={language}
+      />
     </div>
   );
 }

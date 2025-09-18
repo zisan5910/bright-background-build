@@ -3,6 +3,7 @@ import { motion } from 'framer-motion';
 import { Element } from 'react-scroll';
 import { Mail, Phone, MapPin, Linkedin, ExternalLink, Send, CheckCircle } from 'lucide-react';
 import { useState } from 'react';
+import ProfessionalLayout from './ProfessionalLayout';
 
 interface ContactProps {
   language: 'en' | 'bn';
@@ -117,22 +118,11 @@ const Contact = ({ language }: ContactProps) => {
 
   return (
     <Element name="contact">
-      <motion.section
-        initial={{ opacity: 0, y: 20 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true, margin: '-100px' }}
-        className="section-card mx-2 sm:mx-0"
-        aria-labelledby="contact-heading"
+      <ProfessionalLayout
+        title={contactData.title[language]}
+        icon={<Mail className="text-emerald-500" size={24} />}
+        className="mx-2 sm:mx-0"
       >
-        <h2
-          id="contact-heading"
-          className="premium-title flex items-center gap-3"
-        >
-          <div className="icon-wrapper bg-emerald-100">
-            <Mail className="text-emerald-500" size={24} />
-          </div>
-          {contactData.title[language]}
-        </h2>
 
         {isSubmitted && (
           <motion.div
@@ -262,7 +252,7 @@ const Contact = ({ language }: ContactProps) => {
             </form>
           </motion.div>
         </div>
-      </motion.section>
+      </ProfessionalLayout>
     </Element>
   );
 };

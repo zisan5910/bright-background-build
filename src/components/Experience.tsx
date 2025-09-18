@@ -1,6 +1,7 @@
 import { motion } from 'framer-motion';
 import { Element } from 'react-scroll';
 import { Briefcase, Target, HeartHandshake, ExternalLink, Facebook } from 'lucide-react';
+import ProfessionalLayout from './ProfessionalLayout';
 
 interface ExperienceProps {
   language: 'en' | 'bn';
@@ -182,22 +183,10 @@ const Experience = ({ language }: ExperienceProps) => {
 
   return (
     <Element name="experience">
-      <motion.section
-        initial={{ opacity: 0, y: 20 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true, margin: '-100px' }}
-        className="section-card"
-        aria-labelledby="experience-heading"
+      <ProfessionalLayout
+        title={language === 'en' ? 'Experience' : 'অভিজ্ঞতা'}
+        icon={<Briefcase className="text-emerald-500" size={24} />}
       >
-        <h2
-          id="experience-heading"
-          className="premium-title flex items-center gap-3"
-        >
-          <div className="icon-wrapper bg-emerald-100">
-            <Briefcase className="text-emerald-500" size={24} />
-          </div>
-          {language === 'en' ? 'Experience' : 'অভিজ্ঞতা'}
-        </h2>
 
         <div className="space-y-8">
           {experiences.map((experience) => (
@@ -273,7 +262,7 @@ const Experience = ({ language }: ExperienceProps) => {
             </motion.div>
           ))}
         </div>
-      </motion.section>
+      </ProfessionalLayout>
     </Element>
   );
 };

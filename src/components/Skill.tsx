@@ -9,6 +9,7 @@ import {
   Star,
   ChevronRight,
 } from 'lucide-react';
+import ProfessionalLayout from './ProfessionalLayout';
 
 interface SkillsProps {
   language: 'en' | 'bn';
@@ -144,23 +145,10 @@ const Skills = ({ language }: SkillsProps) => {
 
   return (
     <Element name="skills">
-      <motion.section
-        initial={{ opacity: 0 }}
-        whileInView={{ opacity: 1 }}
-        viewport={{ once: true }}
-        transition={{ duration: 0.5 }}
-        className="section-card"
-        aria-labelledby="skills-heading"
+      <ProfessionalLayout
+        title={language === 'en' ? 'Skills & Competencies' : 'দক্ষতা ও সক্ষমতা'}
+        icon={<Award className="text-emerald-600" size={24} />}
       >
-        <h2
-          id="skills-heading"
-          className="premium-title flex items-center gap-3"
-        >
-          <div className="icon-wrapper bg-emerald-100">
-            <Award className="text-emerald-600" size={24} />
-          </div>
-          {language === 'en' ? 'Skills & Competencies' : 'দক্ষতা ও সক্ষমতা'}
-        </h2>
 
         <div className="space-y-8">
           {/* Language Skills */}
@@ -214,7 +202,7 @@ const Skills = ({ language }: SkillsProps) => {
             </motion.div>
           ))}
         </div>
-      </motion.section>
+      </ProfessionalLayout>
     </Element>
   );
 };
