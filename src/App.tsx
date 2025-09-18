@@ -67,10 +67,14 @@ function App() {
   const scrollToSection = (section: string) => {
     if (section === 'research') {
       setCurrentPage('research');
+      // Scroll to top when switching to research page
+      window.scrollTo({ top: 0, behavior: 'smooth' });
       return;
     }
     if (section === 'blog') {
       setCurrentPage('blog');
+      // Scroll to top when switching to blog page
+      window.scrollTo({ top: 0, behavior: 'smooth' });
       return;
     }
     
@@ -87,6 +91,8 @@ function App() {
   const handleBackToHome = () => {
     setCurrentPage('home');
     setActiveSection('profile');
+    // Scroll to top when going back to home
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
   // Render current page
