@@ -26,7 +26,7 @@ const CertificateSlider = ({ certificates, language }: CertificateSliderProps) =
   const sliderRef = useRef<HTMLDivElement>(null);
   const fullscreenRef = useRef<HTMLDivElement>(null);
 
-  // Preload images with offline fallback
+  // Preload images with WebP support and performance optimization
   useEffect(() => {
     let loadedCount = 0;
     const totalImages = certificates.length;
@@ -48,19 +48,29 @@ const CertificateSlider = ({ certificates, language }: CertificateSliderProps) =
       }
     };
 
-    certificates.forEach((cert) => {
+    // Preload all images immediately with high priority
+    certificates.forEach((cert, index) => {
       const img = new Image();
       img.src = cert.image;
+      img.loading = 'eager'; // High priority loading
+      img.fetchPriority = 'high';
       img.onload = handleImageLoad;
       img.onerror = () => handleImageError(cert.image);
+      
+      // Preload the first few images with higher priority
+      if (index < 3) {
+        const link = document.createElement('link');
+        link.rel = 'preload';
+        link.as = 'image';
+        link.href = cert.image;
+        document.head.appendChild(link);
+      }
     });
 
     return () => {
-      certificates.forEach(() => {
-        const img = new Image();
-        img.onload = null;
-        img.onerror = null;
-      });
+      // Clean up preload links
+      const preloadLinks = document.querySelectorAll('link[rel="preload"][as="image"]');
+      preloadLinks.forEach(link => link.remove());
     };
   }, [certificates]);
 
@@ -117,13 +127,13 @@ const CertificateSlider = ({ certificates, language }: CertificateSliderProps) =
     setIsFullscreen(!isFullscreen);
   };
 
-  // Auto-play functionality - every 2 seconds
+  // Auto-play functionality - faster transitions (1.5 seconds)
   useEffect(() => {
     if (!isAutoPlaying || isLoading) return;
 
     const timer = setInterval(() => {
       setCurrentIndex((prev) => (prev === certificates.length - 1 ? 0 : prev + 1));
-    }, 2000);
+    }, 1500); // Faster auto-play for better user experience
 
     return () => clearInterval(timer);
   }, [certificates.length, isAutoPlaying, isLoading]);
@@ -241,7 +251,7 @@ const CertificateSlider = ({ certificates, language }: CertificateSliderProps) =
             initial={{ opacity: 0, x: 100 }}
             animate={{ opacity: 1, x: 0 }}
             exit={{ opacity: 0, x: -100 }}
-            transition={{ duration: 0.5 }}
+            transition={{ duration: 0.2, ease: 'easeOut' }} // Faster, smoother transitions
           >
             {failedImages.has(certificates[currentIndex].image) ? (
               <div className="w-full h-full flex items-center justify-center bg-gray-200 rounded-lg">
@@ -263,7 +273,9 @@ const CertificateSlider = ({ certificates, language }: CertificateSliderProps) =
                   background: 'transparent',
                   filter: isFullscreen ? 'none' : 'drop-shadow(0 4px 12px rgba(0,0,0,0.15))'
                 }}
-                loading="lazy"
+                loading="eager" // Eager loading for better performance
+                fetchPriority="high" // High priority for current image
+                decoding="async" // Async decoding for better performance
                 onError={() => {
                   setFailedImages(prev => new Set([...prev, certificates[currentIndex].image]));
                 }}
