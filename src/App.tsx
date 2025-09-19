@@ -1,29 +1,52 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Element, scroller } from 'react-scroll';
 import { UserCircle, School, BookOpen, Briefcase, FileBadge, Code, HeartHandshake, Mail, Share2, Search, PenTool } from 'lucide-react';
 
 // Import components in alphabetical order
-import Certificates from './components/Certificates';
+import CertificateSection from './components/CertificateSection';
 import Contact from './components/Contact';
 import Courses from './components/Courses';
 import Education from './components/Education';
 import Experience from './components/Experience';
 import FloatingMenu from './components/FloatingMenu';
 import Footer from './components/Footer';
-import Family from './components/Family';
+import Information from './components/Information';
 import Navigation from './components/Navigation';
-import Profile from './components/Profile';
-import Skills from './components/Skills';
+import ProfileSection from './components/ProfileSection';
+import Skill from './components/Skill';
 
 // Import pages
 import Research from './pages/Research';
 import Blog from './pages/Blog';
 
+// Import data
+import { content, certificates } from './data/content';
 
 function App() {
   const [language, setLanguage] = useState<'en' | 'bn'>('en');
   const [activeSection, setActiveSection] = useState<string>('profile');
   const [currentPage, setCurrentPage] = useState<string>('home');
+  const [age, setAge] = useState<number>(0);
+
+  // Calculate age on component mount and update daily
+  useEffect(() => {
+    const calculateAge = () => {
+      const birthDate = new Date('2007-12-31');
+      const today = new Date();
+      let age = today.getFullYear() - birthDate.getFullYear();
+      const monthDiff = today.getMonth() - birthDate.getMonth();
+
+      if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < birthDate.getDate())) {
+        age--;
+      }
+
+      setAge(age);
+    };
+
+    calculateAge();
+    const interval = setInterval(calculateAge, 86400000); // Update daily
+    return () => clearInterval(interval);
+  }, []);
 
   // Navigation configuration
   const navigationItems = [
@@ -83,8 +106,9 @@ function App() {
         return (
           <>
             {/* Profile Section */}
-            <Profile
+            <ProfileSection
               language={language}
+              content={content as any}
               scrollToSection={scrollToSection}
             />
 
@@ -107,15 +131,21 @@ function App() {
                 </Element>
 
                 {/* Certificates Section */}
-                <Certificates language={language} />
+                <CertificateSection
+                  language={language}
+                  content={content}
+                  certificates={certificates}
+                />
 
                 {/* Skills Section */}
                 <Element name="skills">
-                  <Skills language={language} />
+                  <Skill language={language} />
                 </Element>
 
                 {/* Family Information Section */}
-                <Family language={language} />
+                <Element name="family">
+                  <Information language={language} age={age} />
+                </Element>
 
                 {/* Contact Section */}
                 <Element name="contact">

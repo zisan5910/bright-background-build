@@ -10,32 +10,82 @@ import {
   ChevronRight,
 } from 'lucide-react';
 import ProfessionalLayout from './ProfessionalLayout';
-import { skillsData } from '../data/skills';
 
 interface SkillsProps {
   language: 'en' | 'bn';
 }
 
 const Skills = ({ language }: SkillsProps) => {
-  const getSectionStyling = (sectionIndex: number) => {
-    const styles = [
-      {
-        color: 'bg-green-100',
-        hoverColor: 'hover:bg-green-200',
-        iconColor: 'text-green-600',
+  const skillsData = {
+    languages: {
+      title: {
+        en: 'Languages',
+        bn: 'ভাষা',
       },
-      {
-        color: 'bg-blue-100', 
-        hoverColor: 'hover:bg-blue-200',
-        iconColor: 'text-blue-600',
+      skills: [
+        {
+          name: {
+            en: 'Bengali (Fluent)',
+            bn: 'বাংলা (সাবলীল)',
+          },
+          level: 5,
+        },
+        {
+          name: {
+            en: 'English (Professional)',
+            bn: 'ইংরেজি (পেশাদার)',
+          },
+          level: 4,
+        },
+      ],
+    },
+    professional: {
+      title: {
+        en: 'Core Professional Skills',
+        bn: 'মূল পেশাদার দক্ষতা',
       },
-      {
-        color: 'bg-purple-100',
-        hoverColor: 'hover:bg-purple-200', 
-        iconColor: 'text-purple-600',
-      }
-    ];
-    return styles[sectionIndex] || styles[0];
+      skills: [
+        { en: 'MS Office Suite', bn: 'এমএস অফিস' },
+        { en: 'Email Communication', bn: 'ইমেইল যোগাযোগ' },
+        { en: 'Team Collaboration', bn: 'দলগত সমন্বয়' },
+        { en: 'Time Management', bn: 'সময় ব্যবস্থাপনা' },
+        { en: 'Problem Solving', bn: 'সমস্যা সমাধান' },
+        { en: 'Professional Ethics', bn: 'পেশাদার নীতি' },
+      ],
+      color: 'bg-green-100',
+      hoverColor: 'hover:bg-green-200',
+      iconColor: 'text-green-600',
+    },
+    communication: {
+      title: {
+        en: 'Communication Skills',
+        bn: 'যোগাযোগ দক্ষতা',
+      },
+      skills: [
+        { en: 'Report Writing', bn: 'রিপোর্ট লেখা' },
+        { en: 'Active Listening', bn: 'সক্রিয় শোনা' },
+        { en: 'Presentation', bn: 'প্রেজেন্টেশন' },
+        { en: 'Professional Email', bn: 'পেশাদার ইমেইল' },
+      ],
+      color: 'bg-blue-100',
+      hoverColor: 'hover:bg-blue-200',
+      iconColor: 'text-blue-600',
+    },
+    additional: {
+      title: {
+        en: 'Additional Skills',
+        bn: 'অতিরিক্ত দক্ষতা',
+      },
+      skills: [
+        { en: 'Canva/Photoshop', bn: 'ক্যানভা/ফটোশপ' },
+        { en: 'Social Media', bn: 'সোশ্যাল মিডিয়া' },
+        { en: 'Web and App Development', bn: 'ওয়েব এবং এ্যাপ ডেভেলপমেন্ট' },
+        { en: 'The concept of AI', bn: 'AI এর ধারণা' },
+      ],
+      color: 'bg-purple-100',
+      hoverColor: 'hover:bg-purple-200',
+      iconColor: 'text-purple-600',
+    },
   };
 
   const renderLanguageSkill = (skill: any, index: number) => (
@@ -112,21 +162,19 @@ const Skills = ({ language }: SkillsProps) => {
               <div className="p-2 bg-blue-100 rounded-lg">
                 <Languages size={20} className="text-blue-600" />
               </div>
-              {skillsData.categories.languages.title[language]}
+              {skillsData.languages.title[language]}
             </h3>
             <div className="space-y-4 pl-2">
-              {skillsData.categories.languages.skills.map(renderLanguageSkill)}
+              {skillsData.languages.skills.map(renderLanguageSkill)}
             </div>
           </motion.div>
 
           {/* Other Skills Sections */}
           {[
-            skillsData.categories.professional,
-            skillsData.categories.communication,
-            skillsData.categories.additional,
-          ].map((section, sectionIndex) => {
-            const styling = getSectionStyling(sectionIndex);
-            return (
+            skillsData.professional,
+            skillsData.communication,
+            skillsData.additional,
+          ].map((section, sectionIndex) => (
             <motion.div
               key={sectionIndex}
               initial={{ opacity: 0 }}
@@ -135,25 +183,24 @@ const Skills = ({ language }: SkillsProps) => {
               transition={{ duration: 0.5, delay: sectionIndex * 0.1 }}
             >
               <h3 className="font-bold text-lg flex items-center gap-3 mb-4 text-gray-700">
-                <div className={`p-2 ${styling.color} rounded-lg`}>
+                <div className={`p-2 ${section.color} rounded-lg`}>
                   {sectionIndex === 0 ? (
-                    <Target size={20} className={styling.iconColor} />
+                    <Target size={20} className={section.iconColor} />
                   ) : sectionIndex === 1 ? (
-                    <MessageSquare size={20} className={styling.iconColor} />
+                    <MessageSquare size={20} className={section.iconColor} />
                   ) : (
-                    <PlusCircle size={20} className={styling.iconColor} />
+                    <PlusCircle size={20} className={section.iconColor} />
                   )}
                 </div>
                 {section.title[language]}
               </h3>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                 {section.skills.map((skill, skillIndex) =>
-                  renderSkillCard(skill, skillIndex, styling)
+                  renderSkillCard(skill, skillIndex, section)
                 )}
               </div>
             </motion.div>
-            );
-          })}
+          ))}
         </div>
       </ProfessionalLayout>
     </Element>

@@ -3,21 +3,22 @@ import { Element } from 'react-scroll';
 import { FileText } from './icons';
 import CertificateSlider from './CertificateSlider';
 import ProfessionalLayout from './ProfessionalLayout';
-import { certificatesData } from '../data/certificates';
 
-interface CertificatesProps {
+interface CertificateSectionProps {
   language: 'en' | 'bn';
+  content: any;
+  certificates: any[];
 }
 
-const Certificates = ({ language }: CertificatesProps) => {
+const CertificateSection = ({ language, content, certificates }: CertificateSectionProps) => {
   return (
     <Element name="certificates">
       <ProfessionalLayout
-        title={certificatesData.title[language]}
+        title={content[language].certifications}
         icon={<FileText className="text-green-600" size={24} />}
       >
         <CertificateSlider
-          certificates={certificatesData.certificates}
+          certificates={certificates}
           language={language}
         />
       </ProfessionalLayout>
@@ -25,4 +26,4 @@ const Certificates = ({ language }: CertificatesProps) => {
   );
 };
 
-export default Certificates;
+export default CertificateSection;
