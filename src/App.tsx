@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { Element, scroller } from 'react-scroll';
 import { UserCircle, School, BookOpen, Briefcase, FileBadge, Code, HeartHandshake, Mail, Share2, Search, PenTool } from 'lucide-react';
 
@@ -24,27 +24,6 @@ function App() {
   const [language, setLanguage] = useState<'en' | 'bn'>('en');
   const [activeSection, setActiveSection] = useState<string>('profile');
   const [currentPage, setCurrentPage] = useState<string>('home');
-  const [age, setAge] = useState<number>(0);
-
-  // Calculate age on component mount and update daily
-  useEffect(() => {
-    const calculateAge = () => {
-      const birthDate = new Date('2007-12-31');
-      const today = new Date();
-      let age = today.getFullYear() - birthDate.getFullYear();
-      const monthDiff = today.getMonth() - birthDate.getMonth();
-
-      if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < birthDate.getDate())) {
-        age--;
-      }
-
-      setAge(age);
-    };
-
-    calculateAge();
-    const interval = setInterval(calculateAge, 86400000); // Update daily
-    return () => clearInterval(interval);
-  }, []);
 
   // Navigation configuration
   const navigationItems = [
@@ -136,7 +115,7 @@ function App() {
                 </Element>
 
                 {/* Family Information Section */}
-                <Family language={language} age={age} />
+                <Family language={language} />
 
                 {/* Contact Section */}
                 <Element name="contact">
