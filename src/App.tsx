@@ -3,24 +3,22 @@ import { Element, scroller } from 'react-scroll';
 import { UserCircle, School, BookOpen, Briefcase, FileBadge, Code, HeartHandshake, Mail, Share2, Search, PenTool } from 'lucide-react';
 
 // Import components in alphabetical order
-import CertificateSection from './components/CertificateSection';
+import Certificates from './components/Certificates';
 import Contact from './components/Contact';
 import Courses from './components/Courses';
 import Education from './components/Education';
 import Experience from './components/Experience';
 import FloatingMenu from './components/FloatingMenu';
 import Footer from './components/Footer';
-import Information from './components/Information';
+import Family from './components/Family';
 import Navigation from './components/Navigation';
-import ProfileSection from './components/ProfileSection';
-import Skill from './components/Skill';
+import Profile from './components/Profile';
+import Skills from './components/Skills';
 
 // Import pages
 import Research from './pages/Research';
 import Blog from './pages/Blog';
 
-// Import data
-import { content, certificates } from './data/content';
 
 function App() {
   const [language, setLanguage] = useState<'en' | 'bn'>('en');
@@ -106,9 +104,8 @@ function App() {
         return (
           <>
             {/* Profile Section */}
-            <ProfileSection
+            <Profile
               language={language}
-              content={content as any}
               scrollToSection={scrollToSection}
             />
 
@@ -131,21 +128,15 @@ function App() {
                 </Element>
 
                 {/* Certificates Section */}
-                <CertificateSection
-                  language={language}
-                  content={content}
-                  certificates={certificates}
-                />
+                <Certificates language={language} />
 
                 {/* Skills Section */}
                 <Element name="skills">
-                  <Skill language={language} />
+                  <Skills language={language} />
                 </Element>
 
                 {/* Family Information Section */}
-                <Element name="family">
-                  <Information language={language} age={age} />
-                </Element>
+                <Family language={language} age={age} />
 
                 {/* Contact Section */}
                 <Element name="contact">

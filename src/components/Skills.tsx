@@ -10,13 +10,14 @@ import {
   ChevronRight,
 } from 'lucide-react';
 import ProfessionalLayout from './ProfessionalLayout';
+import { skillsData } from '../data/skills';
 
 interface SkillsProps {
   language: 'en' | 'bn';
 }
 
 const Skills = ({ language }: SkillsProps) => {
-  const skillsData = {
+  const data = skillsData.categories;
     languages: {
       title: {
         en: 'Languages',
